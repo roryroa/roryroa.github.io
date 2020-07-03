@@ -1,0 +1,159 @@
+<?php
+	if($_POST['formSubmit'] == "Submit") 
+    {
+		$errorMessage = "";
+		
+		if(empty($_POST['formMovie'])) 
+        {
+			$errorMessage .= "<li>Ud olvido digitar un Movie!</li>";
+		}
+		if(empty($_POST['formName'])) 
+        {
+			$errorMessage .= "<li>Ud olvido digitar un nombre!</li>";
+		}
+		
+        $varMovie = $_POST['formMovie'];
+		$varName = $_POST['formName'];
+		
+
+		if(empty($errorMessage)) 
+        {
+			exit();
+			$db = mysql_connect("localhost","root","admin");
+			if(!$db) die("Error conectando a la base de datos.");
+			mysql_select_db("oscar_2014" ,$db);
+
+			$sql = "INSERT INTO syslog (fecha, hora,usuario,servicio, evento) VALUES (CURDATE(),CURTIME(),".
+							PrepSQL($varMovie) . ", " .
+							PrepSQL($varName) . ", " .
+							PrepSQL($varGender) . ")";
+			//mysql_query($sql);
+			
+			//header("Location: gracias.html");
+			exit();
+		}
+	}
+            
+    // function: PrepSQL()
+    // use stripslashes and mysql_real_escape_string PHP functions
+    // to sanitize a string for use in an SQL query
+    //
+    // also puts single quotes around the string
+    //
+    function PrepSQL($value)
+    {
+        // Stripslashes
+        if(get_magic_quotes_gpc()) 
+        {
+           // $value = stripslashes($value);
+        }
+
+        // Quote
+        $value = "'" . mysql_real_escape_string($value) . "'";
+
+        return($value);
+    }
+?>
+<head>
+  <meta charset="utf-8">
+  <title>Samuel Roa Conracto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+		
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/mapa.css" rel="stylesheet">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="img/favicon.png">
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBifcwm5vlL0M0vlRI0Lq297Hwjpx_FNDg&sensor=false"></script>
+	
+	<script>
+    function initialize() {
+        var mapProp = {
+            center: new google.maps.LatLng(4.637098860180502, -74.09771612345422),
+            zoom: 600,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap")
+  , mapProp);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	
+</head>
+
+<body>
+
+<div class="container">
+	
+	<div class="row clearfix">
+		<div class="col-md-10 column">
+			<div class="jumbotron">
+				<h2>
+					Contacto
+				</h2>
+				<p>
+					
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" href="index.html">Inicio</a>
+				</p>
+			</div>
+			<div  class="google-maps">
+			<div id="googleMap" style="width:886px; height:436px;"></div>
+			<div>
+		</div>
+	</div>		
+			Se usan los APIs de Google para conectarse al Servidor de Google Maps y poder ubicar y mostrar Sitios 
+con coordenadas, del Colegio.
+</div>
+<br>
+<div>
+<?php
+		    if(!empty($errorMessage)) 
+		    {
+			    echo("<p>Hay un Error con el Formulario:</p>\n");
+			    echo("<ul>" . $errorMessage . "</ul>\n");
+            }
+        ?>
+
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+			<p>
+				<label for='formMovie'>Cual es su Tema favorito?</label><br/>
+				<input type="text" name="formMovie" maxlength="50" value="<?=$varMovie;?>" />
+			</p>
+			<p>
+				<label for='formName'>Cual es su nombre?</label><br/>
+				<input type="text" name="formName" maxlength="50" value="<?=$varName;?>" />
+			</p>
+
+			<p>
+				<label for='formArea'>Haga sus comentarios?</label><br/>
+				<input type="textarea" name="formArea" width="200" maxlength="150" value="<?=$varArea;?>" />
+			</p>
+
+			<!-- <p>
+				<label for='formGender'>What is your Gender?</label><br/>
+				<select name="formGender">
+					<option value="">Seleccione...</option>
+					<option value="M" <? if($varGender=="M") echo(" selected=\"selected\"");?>>Male</option>
+					<option value="F" <? if($varGender=="F") echo(" selected=\"selected\"");?>>Female</option>
+				</select>
+			</p> -->
+			<input type="submit" name="formSubmit" value="Submit" />
+		</form>
+</div>
+</body>			
+
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <title>Proyecto de Robotica</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/estilo/d3/style_inicio.css">
+    <script src="http://localhost:8080/estilo/d3/d3.js"></script>
+    <script src="http://localhost:8080/estilo/d3/app_inicio.js"></script> 
+      
+ 
+    <link rel="stylesheet" href="http://localhost:8080/estilo/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://localhost:8080/estilo/css/bootstrap-theme.min.css">
+   
+      
+    <script type="text/javascript" src="http://localhost:8080/estilo/js/jquery.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/estilo/ui/jquery-ui.js"></script>
+    <link href="http://localhost:8080/estilo/ui/jquery-ui.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8080/estilo/css/style.css" rel="stylesheet"/>
+      <script src="http://localhost:8080/estilo/js/main.js"></script>
+    <style>
+        
+        #botprender {
+        background: url("images/botonprender.jpg") no-repeat bottom;
+        width: 110px;
+        height: 115px;
+        padding: 0;
+        border: none;
+}    
+
+       #botapagar {
+        background: url("images/botonapagar.jpg") no-repeat bottom;
+        width: 110px;
+        height: 115px;
+        padding: 0;
+        border: none;
+}        
+        #musicazul {
+        background: url("images/musicazul.jpg") no-repeat bottom;
+        width: 110px;
+        height: 110px;
+        padding: 0;
+        border: none;
+}                 
+        #musicrojo {
+        background: url("images/musicrojo.jpg") no-repeat bottom;
+        width: 110px;
+        height: 110px;
+        padding: 0;
+        border: none;
+}                 
+        #musicnegra {
+        background: url("images/musicnegro.jpg") no-repeat bottom;
+        width: 110px;
+        height: 110px;
+        padding: 0;
+        border: none;
+}
+       #musicnaranja {
+        background: url("images/musicnaranja.jpg") no-repeat bottom;
+        width: 110px;
+        height: 110px;
+        padding: 0;
+        border: none;
+}
+       #musicmorado {
+        background: url("images/musicmorado.jpg") no-repeat bottom;
+        width: 110px;
+        height: 110px;
+        padding: 0;
+        border: none;
+}           
+      #eq > span {
+        height:120px; float:left; margin:15px
+      }
+
+      #eqSonidos > span {
+        height:120px; float:left; margin:15px
+      }
+        
+        #gaugeValue {
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fafafa), color-stop(100%, #f3f3f3));
+        background-image: -webkit-linear-gradient(#fafafa, #f3f3f3);
+        background-image: -moz-linear-gradient(#fafafa, #f3f3f3);
+        background-image: -o-linear-gradient(#fafafa, #f3f3f3);
+        background-image: -ms-linear-gradient(#fafafa, #f3f3f3);
+        background-image: linear-gradient(#fafafa, #f3f3f3);
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+        -o-border-radius: 3px;
+        border-radius: 3px;
+        -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+    }
+    </style>
+      
+    <script>
+        
+      var a = jQuery.noConflict();
+        
+      a(function() {
+           
+        a( "#ledRojo" ).slider({
+              value: 0,
+              orientation: "horizontal",
+              range: "min",
+              animate: true,
+          slide: function(event, ui) {
+              var value = parseInt( ui.value, 10 );
+              /* alert(value); */
+              console.log("ENVIANDO valor de LED Rojo en Slider:", ui.value);
+
+               a(this).css("text-decoration", "none").css("text-align", "center").text(ui.value);   
+              socket.emit('ledRojo',{delay: ui.value});
+          }
+        });
+
+        a( "#ledVerde" ).slider({
+              value: 0,
+              orientation: "horizontal",
+              range: "min",
+              animate: true,
+            slide: function(event, ui) {
+              var value = parseInt( ui.value, 10 );
+              /* alert(value); */
+              console.log("ENVIANDO valor de LED Verde en Slider:", ui.value);
+
+               a(this).css("text-decoration", "none").css("text-align", "center").text(ui.value);   
+              socket.emit('ledVerde',{delay: ui.value});
+          }
+        });
+        a( "#ledAzul" ).slider({
+              value: 0,
+              orientation: "horizontal",
+              range: "min",
+              animate: true,
+            slide: function(event, ui) {
+              var value = parseInt( ui.value, 10 );
+             
+              console.log("ENVIANDO valor de LED Azul en Slider:", ui.value);
+
+               a(this).css("text-decoration", "none").css("text-align", "center").text(ui.value);   
+              socket.emit('ledAzul',{delay: ui.value});
+          }
+        });
+        a( "#ledAmarillo" ).slider({
+              value: 0,
+              orientation: "horizontal",
+              range: "min",
+              animate: true,
+            slide: function(event, ui) {
+              var value = parseInt( ui.value, 10 );
+            
+              console.log("ENVIANDO valor de LED Amarillo en Slider:", ui.value);
+
+              a(this).css("text-decoration", "none").css("text-align", "center").text(ui.value);   
+              socket.emit('ledAmarillo',{delay: ui.value});
+          }
+        });
+      
+        a( "#motordc" ).slider({
+              value: 0,
+              orientation: "horizontal",
+              range: "min",
+              animate: true,
+              slide: function(event, ui) {
+                  var value = parseInt( ui.value, 10 );
+                  console.log("Desplazando y asignando valor en Slider:", ui.value);
+                  a(this).css("text-decoration", "none").css("text-align", "center").text(ui.value);   
+                  socket.emit('motordc',{delay: ui.value});
+              }
+        });  
+          
+        a("#musicrojo").bind('click',function(){
+        
+        console.log("escuchando MusicRojo:");
+        socket.emit('musicred',1);
+        });    
+          
+        a("#musicnegra").bind('click',function(){
+        
+        console.log("escuchando MusicNegra:");
+        socket.emit('musicblack',1);
+        });    
+
+        a("#musicazul").bind('click',function(){
+        
+        console.log("escuchando MusicAzul:");
+        socket.emit('musicblue',1);
+        });    
+        a("#musicmorado").bind('click',function(){
+        
+        console.log("escuchando MusicMorado:");
+        socket.emit('musicviolet',1);
+        });    
+        a("#musicnaranja").bind('click',function(){
+        
+        console.log("escuchando MusicNaranja:");
+        socket.emit('musicorange',1);
+        });    
+
+          
+          // Configurando el EQ
+        a( "#eq > span" ).each(function() {
+              // read initial values from markup and remove that
+              var value = parseInt( a( this ).text(), 10 );
+              a( this ).empty().slider({
+                value: value,
+                range: "min",
+                animate: true,
+                orientation: "vertical",
+                slide: function(event, ui) {
+                if (ui.value == -64) {
+                    a(".ui-slider-handle,a").css("text-decoration", "none").css("text-align", "center").text("*");
+                    sliderCharacter = '';
+                } else {
+        //            sliderCharacter = String.fromCharCode(ui.value);
+        //            a(".ui-slider-handle,a").css("text-decoration", "none").css("text-align", "center").text(ui.value);                        
+                }
+
+                },
+                stop: function(event, ui) {
+                    //CALL AJAX TO RETRIEVE LIST
+                    slideAction(sliderCharacter);
+                }
+              });
+        });
+
+    });
+    
+    </script>
+      
+    <link rel="stylesheet" href="http://localhost:8080/estilo/jqwidgets/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="http://localhost:8080/estilo/jqwidgets/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/estilo/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/estilo/jqwidgets/jqxdraw.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/estilo/jqwidgets/jqxgauge.js"></script>
+  
+    <script>
+        
+    var c = jQuery.noConflict();
+          
+    c(function() {
+          
+        c('#gaugeContainer').jqxGauge({
+                ranges: [{ startValue: 0, endValue: 55, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
+                         { startValue: 55, endValue: 110, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
+                         { startValue: 110, endValue: 165, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
+                         { startValue: 165, endValue: 220, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
+                ticksMinor: { interval: 5, size: '5%' },
+                ticksMajor: { interval: 10, size: '9%' },
+                value: 0,
+                colorScheme: 'scheme05',
+                animationDuration: 1200
+        });
+
+        c('#gaugeContainer').on('valueChanging', function (e) {
+                $('#gaugeValue').text(Math.round(e.args.value) + ' kph');
+        });
+
+        c('#gaugeContainer').jqxGauge('value', 140);
+
+        c('#linearGauge').jqxLinearGauge({
+                orientation: 'vertical',
+                width: 100,
+                height: 350,
+                ticksMajor: { size: '10%', interval: 10 },
+                ticksMinor: { size: '5%', interval: 2.5, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
+                max: 60,
+                pointer: { size: '5%' },
+                colorScheme: 'scheme05',
+                labels: { interval: 20, formatValue: function (value, position) {
+                    if (position === 'far') {
+                        value = (9 / 5) * value + 32;
+                        if (value === -76) {
+                            return '°F';
+                        }
+                        return value + '°';
+                    }
+                    if (value === -60) {
+                        return '°C';
+                    }
+                    return value + '°';
+                }
+                },
+                ranges: [
+                { startValue: -10, endValue: 10, style: { fill: '#FFF157', stroke: '#FFF157'} },
+                { startValue: 10, endValue: 35, style: { fill: '#FFA200', stroke: '#FFA200'} },
+                { startValue: 35, endValue: 60, style: { fill: '#FF4800', stroke: '#FF4800'}}],
+                animationDuration: 1500
+        });
+
+        c('#linearGauge').jqxLinearGauge('value', 40);
+         
+        });
+     
+  </script>
+  </head>
+
+<body onload="cargarDatos();iniciar();">
+      
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-14 column">
+			<div class="jumbotron">
+                <p>
+					<a class="btn btn-primary btn-large" href="programacion.html">Programacion</a>
+				</p>
+				<h1>Gimnasio William Mackinley</h1>
+                <table>
+                    <tr>
+                        <td><img alt="140x140" src="http://localhost:8080/nodephp/images/five.jpg" /></td><td><h1>Proyecto Robotica</h1><h2>Samuel Roa Octavo B</h2></td>
+                
+                    </tr>   
+                </table>    
+				<div>
+                      
+                    <h2>
+						Controlando Arduino desde una Pagina Web
+					</h2>
+					<h3>
+						Esta construido usando HTML5, Bootstrap, JQuery, NodeJS y Johnny Five.
+					</h3>
+                    <h3>
+						Arduino Mega, Sensor, Leds, Motor DC y MicroServo, Protoboard, cables.
+					</h3>
+
+                </div>
+
+		  </div>
+			
+	</div>
+		
+</div>
+	
+
+<div class="container">
+    <h2>Sensores</h2>   
+    <div class="row">
+         
+      <div class="col-md-4 column">
+          <h4>Monitor Pin Sensor A0 (Analogo)</h4>
+          <textarea class="form-control" style="background:#222; color:#00ff00;" rows="8" id="inData"></textarea>
+      </div>
+
+    
+    
+    <div class="col-md-4 column">
+      <section id="sec_grafica">
+        <table>
+            <tr>
+                <td><img src="http://localhost:8080/nodephp/images/sensor_mv.jpg" width="80" height="80"/></td>
+                <td><h3>Grafica</h3></td>
+            </tr>
+        </table>
+        
+        <canvas id="grafica" width="350" height="200"></canvas>
+      </section>
+     
+    </div>
+      </div>
+   <script src="http://localhost:8080/estilo/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+<!--    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+      <script src="http://localhost:8080/estilo/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+      var socket = io.connect('http://localhost');
+
+      socket.on('news', function (data) {
+        console.log(data);
+      });
+
+      socket.on('sensor', function (data) {
+        console.log("Datos recibido por Sensor:",data.raw);
+        $("#inData").append(data.raw+"\r");
+        $("#inData").animate({scrollTop:$("#inData")[0].scrollHeight - $("#inData").height()},200);
+        // Scale the sensor's data from 0-1023 to 0-10 and log changes
+        sensor.scale(0, 10).on("change", function() {
+        console.log(this.value);
+            
+//        var sensor = new five.Sensor.Digital(2);
+//
+//        sensor.on("change", function() {
+//        console.log(this.value);
+  });
+
+      });
+
+      $('.servobtn').button();
+
+      $('.servobtn').on('change',function(){
+          console.log("Asignando Posicion al Servo:",$('input[name=servo]:checked').val())
+          socket.emit('servo',{pos:$('input[name=servo]:checked').val()});
+      });
+
+      $('#ledSet').on('click',function(){
+        var tmp = parseInt($('#ledDelay').val(),10);
+        console.log("Asignando Retardo al LED:",tmp)
+        socket.emit('led',{delay:tmp});
+      });
+        
+     
+    </script>
+    <br>
+    
+    <div class="row">
+        <h2>Iluminacion LEDs</h2>
+    
+        <div class="col-md-6 column">
+            <h4>Intensidad</h4>
+            <table>
+                <tr>
+                    <td>
+                        <h4><img alt="140x140" src="http://localhost:8080/nodephp/images/ledRojo.jpg" /></h4>
+                    </td>
+                    <td>
+                        <div id="ledRojo" style="width:260px; margin:15px;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4><img alt="140x140" src="http://localhost:8080/nodephp/images/ledVerde.jpg" /></h4>
+                    </td>
+                    <td>
+                        <div id="ledVerde" style="width:260px; margin:15px;"></div>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <h4><img alt="140x140" src="http://localhost:8080/nodephp/images/ledAzul.jpg" /></h4>
+                    </td>
+                    <td>
+                        <div id="ledAzul" style="width:260px; margin:15px;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4><img alt="140x140" src="http://localhost:8080/nodephp/images/ledAmarillo.jpg" /></h4>
+                    </td>
+                    <td>
+                        <div id="ledAmarillo" style="width:260px; margin:15px;"></div>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+    
+    
+        <div class="col-md-4 column">
+            <h4>Retardo Pulsos(ms)</h4>
+            <p><input type="text" class="form-control" id="ledDelay" name="ledDelay" width="100" value="1000" /></p>
+            <p><button id="ledSet" class="btn btn-lg btn-warning">Aplicar Retardo</button></p>
+        
+        </div>
+    
+    </div>    
+
+    <div class="row">
+        <h2>Sonido</h2>
+        <div class="col-md-4 column">
+            <div class="thumbnail">
+              <div class="caption">
+                  <img src="http://localhost:8080/nodephp/images/speaker.jpg" width="80" height="80"/>
+                  <a class="btn btn-primary" href="#">Canciones</a> 
+
+                  <table>
+                    <tr>
+                        <td><p><button id="musicrojo" ></button></p></td>
+                        <td><p><button id="musicnegra" ></button></p></td>
+                        <td><button id="musicazul"> </button></td>
+                        <td><button id="musicmorado"> </button></td>
+                        <td><button id="musicnaranja"> </button></td>
+                    </tr>
+
+                  </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <h2>Motores</h2>
+        <div class="col-md-9 column">
+            <table>
+                <tr>
+                    <td>
+                        <img src="http://localhost:8080/nodephp/images/motordc.jpg" width="80" height="80"/>
+                    </td>
+                    <td>
+                         <a class="btn btn-primary" href="#">Aceleracion de Motor DC (PWM)</a>            
+                        <div id="motordc" style="width:400px; margin:25px;"></div>
+                    </td>
+                    <td>
+                        <div id="demoWidget" style="position: relative;"></div>
+                        <div style="float: left;" id="gaugeContainer"></div>
+                        <div id="gaugeValue" style="position: absolute; top: 235px; left: 132px; font-family: Sans-Serif; text-align: center; font-size: 17px; width: 70px;">
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+
+      </div>
+   </div>
+<div class="row">    
+   <div class="col-md-4 column">
+        <img src="http://localhost:8080/nodephp/images/microservo.jpg" width="80" height="80"/>
+       <h4>Posicionando Servo: (PWM)(Grados)</h4>
+       <div class="btn-group" data-toggle="buttons">
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo1" value="0"> 0
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo2" value="45"> 45
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo3" value="90"> 90
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo4" value="135"> 135
+            </label>            
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo5" value="180"> 180
+            </label>
+      </div>
+   </div>
+ </div>
+ <br>   
+ <div class="row">
+     <div class="col-md-6 column">    
+     <h2>Botones de presion</h2>
+     <br><br>
+     <table>
+    
+        <tr>
+          <td>
+              <button id="botprender"> </button>
+               
+          </td>  
+          <td>
+              <button id="botapagar"> </button>
+          </td>    
+       </tr>
+    </table>
+          
+ </div>
+    
+</div>
+
+<br><br>
+    
+<div class="row">
+    <div class="jumbotron">
+		<div class="col-md-14 Column">
+				                
+            <div class="container"></div>
+			<div>
+                    <h1>Que son estas tecnologias?</h1>                   
+            </div>
+</div>
+    
+<br>
+<div class="col-md-14 Column">    
+<table>
+<tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/mega1.jpg" width="130" height="130"/></td><td><p>Arduino es una tarjeta electronica, con licencia libre, que permite desarrollar proyectos de una forma amigable, dispone de un procesador, pines digitales y analogos, de comunicacion, puerto de Red y USB. mediante programacion, en languajes como C++, Python o Javascript.</p></p></td>
+    </tr>    
+<tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/html5.png" width="130" height="130"/></td><td><p>Es el lenguaje de Hipertext mas popular para paginas web</p></p></td>
+    </tr>
+<tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/favicon.ico" width="150" height="150"/></td><td><p>Bootstrap Hoja de estilo en cascada o CSS (siglas en inglés de cascading style sheets) es un lenguaje usado para definir la presentación de un documento estructurado escrito en HTML o XML2 (y por extensión en XHTML). El World Wide Web Consortium (W3C) es el encargado de formular la especificación de las hojas de estilo que servirán de estándar para los agentes de usuario o navegadores.</p></td>
+</tr>
+<tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/jquery.jpg" width="150" height="150"/></td><td><p>JQuery es una biblioteca de JavaScript, creada inicialmente por John Resig, que permite simplificar la manera de interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con la técnica AJAX a páginas web. Pero ademas permite desarrollar programas asincronicos y controlar robots.</p></td>
+</tr>    
+<tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/nodejs.png" width="150" height="150"/></td><td><p>NodeJS es una plataforma o servicio basado en Google Chrome Runtime, que ejecuta codigo escrito en JavaScript</p></td>
+</tr>
+    <tr>
+    <td><img alt="140x140" src="http://localhost:8080/nodephp/images/five.jpg" width="150" height="150"/></td><td><p>Johnny Five es una Libreria en JavaScript escrita para NodeJS, que permite la programacion de Controladores como Arduino, Rasperry Pi y BeagleBone.</p></td>
+</tr>    
+
+</table>
+</div>
+ <div class="row">   
+     <div class="jumbotron">
+         <h1>Diseño de la Aplicacion</h1>
+          </div>  
+<div class="col-md-14 column">
+    
+   
+        
+         <a class="btn btn-primary" href="#">Consta de 2 partes:</a> 
+<!--        <h2 class="label label-primary">Diseño de la Aplicacion, consta de 2 partes:</h2>-->
+        
+            
+        </p>
+    </div>
+    <div>
+        <p>
+            - El FrontEnd es la parte que visualiza el Usuario, esta en HTML5, y demas componentes citados anteriomente.
+        </p>
+        <p>
+            
+            - En el Backend, esta ejecutandose un codigo en Javascript, sobre NodeJS, el cual monta un servidor Web en el puerto 80, que controla la Arduino, y asincronicamente, esta comunicandose con la Pagina Web, a traves de Sockets, recibiendo las peticiones enviadas desde la pagina.
+        </p>
+    </div>       
+</div>
+    
+</div>
+</div>
+ 
+<p>Grafico de Nodos</p>
+<div id="nodos"></div>
+<p>Gauge</p>
+
+ 
+<!--<div style="margin-left: 60px; float: left;" id="linearGauge"></div>-->
+</body>
+</html>

@@ -1,0 +1,287 @@
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+    
+<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+<!-- <link rel="stylesheet" href="css/jquery.mobile.custom.structure.min.css" /> -->
+<link rel="stylesheet" href="css/gwmk.min.css" />
+    
+<!-- <script src="js/jquery-1.11.2.min.js"></script> -->
+<!-- <script src="js/jquery.mobile.custom.min.js"></script> -->
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script> 
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> 
+<title>Proyecto Robotica GwMk</title>
+
+</head
+
+<body>
+
+    
+<div data-role="page" id="home">
+    <div data-role="header">
+        <h1>Proyecto Robotica GwMk</h1>
+        
+        <a href="#" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all">No text</a>
+        <a href="#listado" class="ui-btn ui-icon-search ui-btn-icon-notext ui-corner-all">No text</a>
+    </div>
+    
+    <div role="main" class="ui-content">
+        
+        <div data-role="collapsible" data-role="controlgroup">
+            <h2>Controlando Arduino desde una Pagina Web</h2>
+           <h1>Diseño de la Aplicacion</h1>
+            
+            <p>
+            
+              Por lo general Arduino se programa con Sketchs, que se escribe con C++ con algun editor como IDE de Arduino, y este algoritmo se transfiere al PROM de la tarjeta Arduino, para que esta la ejecute internamente.
+            </p>
+            
+            <p>El presente Proyecto, no se programa de la forma tradicional</p>
+            <p>Sino que se escriben dos programas, uno para que se ejecute atras, de tal forma que el Usuario final no ve. Y otro que esta hacia el frente del Usuario.</p>
+            
+        <p> - El Frontend es la parte que visualiza el Usuario, esta en HTML5, CSS y JavaScript.</p>
+        <p> - En el Backend, esta ejecutandose un codigo en Javascript, sobre NodeJS, el cual monta un servidor Web en el puerto 80, que controla la Arduino, y asincronicamente, esta comunicandose con la Pagina Web, a traves de Sockets, recibiendo las peticiones enviadas desde la pagina.
+        </p>
+        <p>Elementos en la Pagina Web</p>
+        <p>Se usan etiquetas de diversos tipos, como Botones, Sliders, Cajas de texto, Cajas de area, y algunos widgets, que hacen amigable la interfaz de la aplicacion web</p>
+        <p>Ademas se pueden utilizar graficos, para mostrar de datos recolectados, por ejemplo en el caso de sensores.
+        </p>
+        <p>Slider</p>
+        <div>
+            <input type="range" min="0" max="50"/>
+        
+        </div>
+        <p>Boton</p>
+        <div>
+            <p><button id="ledSet" class="btn btn-lg btn-warning">Aplicar Retardo</button></p>
+        </div>
+        
+        <p>Pagina Web (FrontEnd)</p>
+        <img  src="images/webpage.png" width="400" height="500"/>
+        <p>Fotos del Proyecto en Construccion</p>
+        <img  src="images/proyecto01.JPG" width="600" height="500"/>
+            <br>
+        <img  src="images/proyecto02.JPG" width="600" height="500"/>
+            <br>
+        <img  src="images/proyecto03.JPG" width="600" height="500"/>
+        </div>
+        
+        <div data-role="collapsible">
+            <h2>Que son estas tecnologias?</h2>
+            <table>
+                <tr>
+                    <td><img alt="140x140" src="images/mega1.jpg" width="130" height="130"/></td><td><p>Arduino es una tarjeta electronica, con licencia libre, que permite desarrollar proyectos de una forma amigable, dispone de procesador logico, pines digitales, analogos, de comunicacion, puerto de Red y USB. Se puede programar, en lenguajes como C++, Python, Javascript o Scratch.</p></p></td>
+                    </tr>    
+                <tr>
+                    <td><img alt="140x140" src="images/html5.png" width="130" height="130"/></td><td><p>Es el lenguaje de Hipertexto mas popular para paginas web, se utilizan etiquetas</p></p></td>
+                    </tr>
+                <tr>
+                    <td><img alt="140x140" src="images/favicon.ico" width="150" height="150"/></td><td><p>Bootstrap es un CSS (Cascading Style Sheets), permite aplicar diseños y estilos a la pagina.</p></td>
+                </tr>
+                <tr>
+                    <td><img alt="140x140" src="images/jquery.jpg" width="150" height="150"/></td><td><p>JQuery es una biblioteca de JavaScript, creada inicialmente por John Resig, que permite simplificar la manera de interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con la técnica AJAX a páginas web. Pero ademas permite desarrollar programas asincronicos y controlar robots.</p></td>
+                </tr>    
+                <tr>
+                    <td><img alt="140x140" src="images/nodejs.png" width="150" height="150"/></td><td><p>NodeJS es una plataforma o servicio basado en Google Chrome Runtime, que ejecuta codigo escrito en JavaScript</p></td>
+                </tr>
+                    <tr>
+                    <td><img alt="140x140" src="images/five.jpg" width="150" height="150"/></td><td><p>Johnny Five es una Libreria en JavaScript escrita para NodeJS, que permite la programacion de Controladores como Arduino, Rasperry Pi y BeagleBone.</p></td>
+                </tr>    
+
+            </table>
+        </div>
+
+        <div data-role="collapsible">
+            <h2>En que se pueden utilizar?</h2>
+            <p>El proyecto que se pretende mostrar, es una aplicacion basica de electronica y programacion, usando tecnologias web y una tarjeta Arduino Mega.
+            </p>
+            
+            <p>
+            Es dificil mencionar la gran cantidad de usos, en que podemos utilizar y beneficiarnos.
+            </p>
+            <p>
+Solo por mencionar, por ejemplo en el colegio, se podria.
+            </p>
+Armar un proyecto, que usando una camara o sensor de vision, (kinect), haga reconocimiento facial de cada estudiante que ingrese, y de acuerdo al horario, pueda inatendidamente, registrar a los que lleguen tarde.
+            </p>
+            <p>
+                La aplicabilidad en realidad es inmensa tanto como el universo y la imaginacion de cada uno de nosotros.</p>
+<p>
+Viendo a las actuales generaciones de estudiantes, es importante, dar a conocer estos temas cientificos, para que las estudien, ya sea desde casa, y que bueno seria desde el Colegio.
+            </p>
+            
+            <p>Robot AutoControlado con Raspberry PI</p>
+            <img alt="pi" src="images/raspberrypi.jpg" width="350" height="200"/>
+            <p>Robot a control remoto con Arduino</p>
+            <img alt="arduino" src="images/arduinorobot.jpg" width="350" height="200"/>
+        </div>
+
+        <div data-role="collapsible">
+                <h2>Que podemos aprender?</h2>
+                <p>
+                    <ul>
+                        <li>Conocer estupendas herramientas libres que se usan en estos proyectos</li>
+                        <li>Diseñar modelos electronicos y mecanicos</li>
+                        <li>Aprender diversos lenguajes, que cada vez son mas sencillos, para programar</li>
+                        <li>Aprender del mundo de la Electronica</li>
+                        <li>Saber que no podemos conformarnos</li>
+                        <li>Que toda esta informacion esta en Internet</li>
+                        <li>A reciclar y reutilizar</li>  
+                    </ul>
+                
+                </p>
+        </div>
+
+    </div>
+
+    <div data-role="footer" data-position="fixed"><h2>Samuel Roa Octavo B</h2></div>
+    
+</div>   <!--Cierra la Pagina-->
+    
+<div data-role="page" id="listado" data-theme="b" data-transition="Flip">
+    <a href="#home" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all">No text</a>
+    <div data-role="header"><h1>Johnny Five</h1></div>
+    <div role="main" class="ui-content">
+        <div data-role="collapsible">
+            <h2>FrameWork para control de robots</h2>
+            <p>JavaScript no solamente es un lenguaje para la Web, sino ademas para hacer programas asincronicos, entonces una Web app, conversa con una aplicacion JavaScript en el backend, la cual esta interactuando con una tarjeta electronica como Arduino o Raspberry, que a la vez esta controlando, sensores, leds, motores, que en su conjunto puede ser un robot. </p>
+        <p>Usando la Libreria de Johnny Five, se puede aprender a construir robots, que se muevan, emitan sonidos, reconozcan comandos de voz, envien alertas, etc.
+        </p>
+        <p>
+        Desde que Crish William, creo el modulo en JS, para habilitar un puerto serial-usb, ahora se puede programar las cosas que se quieran, en Ingenieria de Hardware - Software. La creatividad se extiende aun mas.</p>
+            <p>
+            Y esto permite pensar en el Hardware en terminos de Objetos, que mantiene estados y proveen control a traves de una interfaz.
+        </p>
+        </div>
+        <div data-role="collapsible">
+            <h2>Instalacion de NodeJS, con J5</h2>
+            <p>Componentes</p>
+            <ul data-role="listview">
+                <li>NodeJS </li>
+                <ul>
+                <li>
+                    <p>NodeJS como ya se ha descrito, es la plataforma para que un codigo JavaScript, se conecte con un microcontrolador electronico.
+                Este se puede instalar en Sistemas Operativos como Windows, IOS (Mac) y Linux. Es un procedimiento simple, solo es descargarlo del sitio nodejs.org.
+            </p>
+                </li>
+                </ul>
+                   
+                <li>Sockets</li>
+                <ul>
+                <li>
+                Una vez instalado NodeJS, se instala las librerias que permiten conversar el componente del backend y frontend, a traves de sockets, la instalacion es igual de sencilla. En modo terminal desde la carpeta donde esta ubicado NodeJS, se ejecuta el comando: npm install sockets, y lo hace a traves de internet.    
+                </li>
+                </ul>
+                <li>Johnny Five</li>
+                <ul>
+                    <li>
+                    <p>
+                    Esta libreria se instala como la anterior en forma muy sencilla, con el comando npm install johnny-five, a traves de internet.    
+                    </p>
+                    
+                    </li>
+                </ul>
+            </ul>
+            
+        </div>
+        
+        <div data-role="collapsible">
+            <h2>Circuitos Electronicos del Proyecto</h2>
+            <p>Controlador de Motor L293D</p>
+            <img alt="L293D" src="images/L293D_motor.jpg" width="350" height="200"/>
+            <p>Conexion de un LED</p>
+            <img alt="LED" src="images/led_arduino.png" width="350" height="200"/>
+            <p>Conexion de un Parlante</p>
+            <img alt="Speaker" src="images/speaker_arduino.jpg" width="350" height="200"/>
+            <p>Conexion de un MicroServo</p>
+            <img alt="HTX900" src="images/servo_arduino.png" width="350" height="200"/>
+            <p>Componentes electronicos usados</p>
+            <p>Resistencias</p>
+            <p>Es un elemento que como su nombre lo dice, resiste la corriente que circula en un Circuito, y su funcion es proteger dispositivos que componen el diseño</p>
+            <p>Las resistencias tienen su valor en Ohmios, y este valor se calcula de acuerdo al voltaje del circuito, y su formula es R = I *V, donde I es la intensidad y V es el Voltaje.</p>
+            
+            
+        </div>
+        
+        <div data-role="collapsible">
+            <h2>Como se programa?</h2>
+            <p>
+                En este proyecto el lenguaje usado para la parte LOGICA es JavaScript.
+            </p>
+            <p>
+                Hoy en dia la mayoria de lenguajes estan orientados a Objetos, pensando asi, entonces..
+            </p>
+            <p>
+                Para describir literal o verbalmente como se agrega un LED se puede decir...
+            </p>
+            <p>
+                Conecto un LED (2 patas (+) y (-)), una pata a tierra y la otra a un PIN 9 de un tarjeta Controladora.
+            
+            </p>
+            <p>
+               Usando JavaScript y Johnny Five, en forma programatica seria...EN MINUSCULA...
+            </p>
+            <br>
+            <p>
+                
+                var led = new five.Led(9);
+            </p>
+            <p>
+                led.on();
+            
+            </p>
+        </div>
+        
+        <div data-role="collapsible">
+            <h2>Video del Proyecto</h2>
+                   
+            <a href="#popupVideo" data-rel="popup" data-position-to="window" data-role="button" data-theme="a" data-inline="true" aria-haspopup="true" aria-owns="popupVideo" aria-expanded="false" class="ui-link ui-btn ui-btn-a ui-btn-inline ui-shadow ui-corner-all" role="button">Ver</a>
+            
+ <div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+ 
+<!--    <iframe src="https://www.youtube.com/v/OyXorofc7Y4?version=3" width="497" height="298" seamless></iframe>-->
+<!--     <iframe src="http://player.vimeo.com/video/41135183?portrait=0" width="497" height="298" seamless=""></iframe>-->
+<!--
+      <iframe id="player" type="text/html" width="640" height="390"
+  src="https://www.youtube.com/v/OyXorofc7Y4?version=3&enablejsapi=1&origin=https://www.youtube.com"
+  frameborder="0"></iframe>
+-->
+    
+ 
+</div>
+    
+            
+ 
+</div>
+            <!--<div id="videos0">
+                <iframe width="560" height="315" src="https://www.youtube.com/v/OyXorofc7Y4?version=3" frameborder="0" allowfullscreen></iframe>-->
+<!--
+            <object width="840" height="460">
+              <param name="movie" value="https://www.youtube.com/v/OyXorofc7Y4?version=3"></param>
+              <param name="allowFullScreen" value="true"></param>
+              <param name="allowScriptAccess" value="always"></param>
+              <embed src="https://www.youtube.com/v/OyXorofc7Y4?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="840" height="460"></embed>
+
+            </object>
+-->
+       
+            </div>
+        </div>
+    </div>
+<div data-role="footer" data-position="fixed"><h2>Samuel Roa Octavo B</h2></div>
+    
+</div>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+</body>
+
+</html>

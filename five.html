@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <title>Proyecto de Robotica</title>
+      
+    <script>jQuery.noConflict();</script>
+      
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+<!--    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+
+      <link rel="stylesheet" href="http://localhost:8080/estilo/css/bootstrap.min.css">
+    <!-- Optional theme -->
+<!--    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">-->
+<link rel="stylesheet" href="http://localhost:8080/estilo/css/bootstrap-theme.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      
+<script type="text/javascript" src="http://localhost:8080/estilo/js/jquery.js"></script>
+<script type="text/javascript" src="http://localhost:8080/estilo/ui/jquery-ui.js"></script>
+<link href="http://localhost:8080/estilo/ui/jquery-ui.min.css" rel="stylesheet"/>
+<!--<link href="http://localhost:8080/samuelroa/css/bootstrap.css" rel="stylesheet"/>-->
+<link href="http://localhost:8080/estilo/css/style.css" rel="stylesheet"/>
+      
+      <style>
+/*
+          html { 
+  background: url(http://localhost:8080/estilo/images/logoarduino.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+*/
+          
+          
+  #eq > span {
+    height:120px; float:left; margin:15px
+  }
+  </style>
+  <script>
+      var a = jQuery.noConflict();
+  a(function() {
+    // setup master volume
+      
+    a( "#master1" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+      
+    a( "#master2" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+    a( "#master3" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+    a( "#master4" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+    a( "#master5" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });  
+    // setup graphic EQ
+  
+    a( "#eq > span" ).each(function() {
+      // read initial values from markup and remove that
+      var value = parseInt( a( this ).text(), 10 );
+      a( this ).empty().slider({
+        value: value,
+        range: "min",
+        animate: true,
+        orientation: "vertical",
+        slide: function(event, ui) {
+        if (ui.value == -64) {
+            a(".ui-slider-handle,a").css("text-decoration", "none").css("text-align", "center").text("*");
+            sliderCharacter = '';
+        } else {
+            sliderCharacter = String.fromCharCode(ui.value);
+            a(".ui-slider-handle,a").css("text-decoration", "none").css("text-align", "center").text(ui.value);                        
+        }
+        
+    },
+    stop: function(event, ui) {
+        //CALL AJAX TO RETRIEVE LIST
+        slideAction(sliderCharacter);
+    }
+      });
+    });
+      
+         
+  });
+      
+  </script>
+  </head>
+
+<body >
+      
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+				<h1>Gimnasio William Mackinley</h1>
+                <h2>Samuel Roa Octavo B</h2>
+                
+				<div class="container">
+					<img alt="140x140" src="images/dotnet.jpg" />
+				</div>
+				<div>
+                    <h1>Proyecto Robotica</h1>                   
+					<h2>
+						Esta construido usando HTML5, Bootstrap, JQuery, NodeJS y Johnny Five.
+					</h2>
+
+                </div>
+
+		  </div>
+			
+	</div>
+		
+</div>
+	
+<!--      <img src="http://localhost:8080/estilo/images/mega.jpg"  >-->
+      <div class="fullscreen background" style="background-image:url('http://localhost:8080/estilo/images/mega.jpg');" data-img-width="1600" data-img-height="1064">
+
+<div class="container">
+        
+    <div class="row">
+      <div class="col-md-3">
+      <h4>Monitor Pin Analogo A0</h4>
+      <textarea class="form-control" style="background:#222; color:#00ff00;" rows="8" id="inData"></textarea>
+      </div>
+      <div class="col-md-4">
+      <h4>Posicionando Servo: (Grados)</h4>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo1" value="0"> 0
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo2" value="45"> 45
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo3" value="90"> 90
+            </label>
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo4" value="135"> 135
+            </label>            
+            <label class="servobtn btn btn-lg btn-warning">
+              <input type="radio" name="servo" id="servo5" value="180"> 180
+            </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+      <h4>LED Retardo de Pulsos (ms)</h4>
+      <p><input type="text" class="form-control" id="ledDelay" name="ledDelay" value="1000" /></p>
+      <p><button id="ledSet" class="btn btn-lg btn-warning">Aplicar Retardo</button></p>
+      </div>
+        
+        
+    </div>
+    </div>
+      
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+     <script src="http://localhost:8080/estilo/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+<!--    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+      <script src="http://localhost:8080/estilo/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+
+      var socket = io.connect('http://localhost');
+
+      socket.on('news', function (data) {
+        console.log(data);
+      });
+
+      socket.on('sensor', function (data) {
+        console.log("Incoming sensor data:",data.raw);
+        $("#inData").append(data.raw+"\r");
+        $("#inData").animate({scrollTop:$("#inData")[0].scrollHeight - $("#inData").height()},200);
+
+      });
+
+      $('.servobtn').button();
+
+      $('.servobtn').on('change',function(){
+          console.log("Setting Servo Pos:",$('input[name=servo]:checked').val())
+          socket.emit('servo',{pos:$('input[name=servo]:checked').val()});
+      });
+
+      $('#ledSet').on('click',function(){
+        var tmp = parseInt($('#ledDelay').val(),10);
+        console.log("Setting LED Delay:",tmp)
+        socket.emit('led',{delay:tmp});
+      });
+
+    </script>
+      <br>
+<div class="row">
+<div class="col-md-4">
+    <table>
+        <tr>
+            <td>
+                <h4>LED 1</h4>
+            </td>
+            <td>
+                <div id="master1" style="width:260px; margin:15px;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>LED 2</h4>
+            </td>
+            <td>
+                <div id="master2" style="width:260px; margin:15px;"></div>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <h4>LED 3</h4>
+            </td>
+            <td>
+                <div id="master3" style="width:260px; margin:15px;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>LED 4</h4>
+            </td>
+            <td>
+                <div id="master4" style="width:260px; margin:15px;"></div>
+            </td>
+        </tr>
+    </table>
+    
+    
+
+    
+</div>
+<!--
+        <p class="ui-state-default ui-corner-all" style="padding:4px;margin-top:4em;">
+          <span class="ui-icon ui-icon-signal" style="float:left; margin:-2px 5px 0 0;"></span>
+          Equalizador de LEDs
+        </p>
+-->
+    <h4>Equalizador de LEDs</h4>
+<div id="eq">
+
+      <span>88</span>
+      <span>77</span>
+      <span>55</span>
+      <span>33</span>
+      <span>40</span>
+      <span>45</span>
+      <span>70</span>
+</div>
+          
+ </div>
+</div> 
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="thumbnail">
+		  <div class="caption">
+              <h4>Equalizador de Sonidos</h4>
+              <div id="eq">
+
+                  <span>88</span>
+                  <span>77</span>
+                  <span>55</span>
+                  <span>33</span>
+                  <span>40</span>
+                  <span>45</span>
+                  <span>70</span>
+              </div>
+            
+              <a class="btn primary" href="arduino.html">Aprende</a> 
+            
+		</div>
+	</div>
+
+
+    <div class="col-md-6">
+<!--        <div class="thumbnail">-->
+<!--            <div class="caption">-->
+                <span class="label label-primary">Aceleracion de Motor DC (PWM)</span>
+                            
+                <div id="master5" style="width:260px; margin:15px;"></div>
+            
+            
+<!--		    </div>-->
+            <a class="btn btn-primary" href="arduino.html">Aprende mas</a> 
+
+	   </div>
+    </div>
+</div>
+
+<br>
+    
+<div class="row">
+<!--	<div class="row clearfix">-->
+		<div class="col-md-12 column">
+<!--			<div class="jumbotron">-->
+				                
+				<div class="container">
+					
+				</div>
+				<div>
+                    <h1>Que son estas tecnologias?</h1>                   
+					
+
+                </div>
+
+<!--		  </div>-->
+			
+<!--	</div>-->
+		
+</div>
+	
+<table>
+<tr>
+    <td><img alt="140x140" src="images/dotnet.jpg" /></td><td><p>HTML5</p></p></td>
+    <td><img alt="140x140" src="images/dotnet.jpg" /></td><td><p>Bootstrap</p></td>
+    <td><img alt="140x140" src="images/dotnet.jpg" /></td><td><p>NodeJS</p></td>
+    <td><img alt="140x140" src="images/dotnet.jpg" /></td><td><p>Johnny Five</p></td>
+</tr>    
+     
+</table>
+    
+    
+</body>
+</html>

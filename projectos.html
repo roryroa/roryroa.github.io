@@ -1,0 +1,547 @@
+								<div class="row">
+							
+									<div class="col-md-10">
+
+										<div class="thumbnail">
+											<h3>
+												Oruga controlada remotamente via Bluetooh
+											</h3>
+											
+											<p>
+												La Oruga se controla via bluetooh, desde cualquier dispositivo ya sea una tablet o un Smartphone.
+											</p>
+
+											<div class="caption">
+											
+												<p>
+													Es una oruga tamiya, se controla los motores, usando un integrado L298N, una Raspberry Pi y un bluetooh HC-06.
+												</p>
+												
+											</div>
+											
+											<img alt="300x200" src="images/raspberrypi.jpg">
+
+										</div>
+
+									</div>
+
+								</div>
+								
+								<div class="row">
+							
+									<div class="col-md-10">
+
+										<div class="thumbnail">
+											<h3>
+												Oruga con Control Autonomo
+											</h3>
+											
+											<p>
+												La Oruga se desplaza de forma autonoma, sin intervencion de humano, usando un Sensor de Ultrasonido, el cual le indica cual es la ruta a seguir, de acuerdo al programa en Python que se escribe para ello.
+											</p>
+
+											<div class="caption">
+											
+												<p>
+													Es una oruga tamiya, se controla los motores, usando un integrado L298N, una Raspberry Pi y un Sensor de Ultrasonido HC-SR04
+												</p>
+												
+											</div>
+											
+											<img alt="300x200" src="images/raspberrypi.jpg">
+
+										</div>
+										
+										<h2>
+										  Codigo Python
+										</h2>
+										
+										<pre>
+										<code>
+			
+	#Programa: robot_autonomo
+
+	#Lenguaje: Python 2.0/3.0
+
+	#Descripcion: 
+
+	#Algoritmo que permite a un vehiculo con Raspberry Pi B+, desplazarse en forma
+	#autonoma, sin intervencion alguna, evitar obstaculos y decidir su propia ruta o
+	#trayectoria, opcionalmente puede disponer de camara para transmitir en linea video
+	#de su avance. Toda la informacion de navegacion y control es almacenada en MySQL.
+	#Ademas puede enviar emails o mensajes de texto, para informa sobre el
+	#estado del Sistema.
+
+	#Autor: Samuel y Rory
+
+	#Fecha: 21/05/2015
+
+	#Hardware: 
+	#Raspberry Pi B+  / L298N / HC-SR04 / MicroServo / Oruga Tamiya GearBox / Camara PiNoir
+
+
+	###########
+	#Librerias
+	###########
+
+	import RPi.GPIO as GPIO
+	import MySQLdb
+	import time
+	import picamera
+	import smtplib
+	from email.mime.text import MIMEText
+
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setwarnings(False)
+
+
+	################
+	#Variables GPIO
+	################
+	#Controlan al L298N
+
+	ENA = 12
+	ENB = 18
+	IN1 = 4
+	IN2 = 17
+	IN3 = 27
+	IN4 = 22
+
+	#Controla el MicroServo
+
+	pinServo = 21
+
+	#Controla el Sensor Ultrasonico HC-SR04
+
+	pinTrig = 23
+	pinEcho = 24
+
+
+	######################
+	#Variables de Control
+	######################
+
+	spd = 0							#Almacena la velocidad actual
+	time = 0						#Controla el tiempo de desplazamiento, Es continuo (-1)
+	forb = 0						#Controla el sentido de desplazamiento, adelante (1) / atras (-1)
+	giroservo[3]					#Controla la direccion de giro del servomotor, Izq (0) / 
+									#Centro (1) / Der (2)
+	standing = 0					#Controla si el vehiculo esta detenido (0) o en movimiento (1),
+									#si esta detenido debe ver en todas las direcciones
+	wentback = 0                    #Controla si previamente hubo movimiento hacia atras, (0/1)
+	brokentrack = 20				#Controla si la via esta en mal estado
+	global connMy					#Instancia para conexion a MySQL
+
+
+	############
+	#Constantes
+	############
+
+	speedMax = 100					#El rango es de (0 a 100) con PWM 
+	speedReduce = 25				#Variable que deduce la velocidad, para girar a los lados
+									# o atras
+	turnTime = 5					#Tiempo tope en segundos para moverse a los lados o atras
+	stopDistance = 20				#Distancia minima, para evitar colision.
+
+	db_host = "localhost"			#Almacena el servidor, usuario y base de datos en MySQL
+	db_user = "root"				
+	db_pass = "admin"
+	db_name = "raspberry"
+
+	mail_gmail = "rpi@gmail.com" 	#Almacena los datos de conexion a Gmail por smtp
+	pass_gmail = "raspberry"
+	mail_to = "rpi@gmail.com"
+
+	##########################
+	#Configuracion de Devices
+	##########################
+
+	#Sensor HC-SR04
+	GPIO.setup(pinTrig, GPIO.OUT)
+	GPIO.setup(pinEcho, GPIO.IN)
+
+	#MicroServo
+	GPIO.setup(pinServo, GPIO.OUT)
+
+	#L298N Controlador de Motores
+	GPIO.setup(ENA, GPIO.OUT)
+	GPIO.setup(ENB, GPIO.OUT)
+	GPIO.setup(IN1, GPIO.OUT)
+	GPIO.setup(IN2, GPIO.OUT)
+	GPIO.setup(IN3, GPIO.OUT)
+	GPIO.setup(IN4, GPIO.OUT)
+
+
+	###########
+	#Funciones
+	###########
+
+	#Para Desplazamiento
+
+	def stop()
+
+		spd = 0
+		forb = 0
+		time = 0
+		standing = 1
+		GPIO.output (ENA, False)
+		GPIO.output (ENB, False)
+
+	def goForward(fast)
+
+		offset = brokenTrack
+
+		if fast == 1:
+			offset = speedMax
+
+		pwma = GPIO.PWM(ENA, offset)
+		pwmb = GPIO.PWM(ENB, offset)
+
+		pwma.start(offset)
+		pwmb.start(offset)
+		pwma.ChangeDutyCycle(offset)
+		pwmb.ChangeDutyCycle(offset)
+
+		GPIO.output (IN1, False)
+		GPIO.output (IN2, True)
+		GPIO.output (IN3, False)
+		GPIO.output (IN4, True)
+
+		standing = 0
+		forb = 1
+		time = -1
+
+
+	def goBackward()
+
+		offset = speedMax - speedReduce
+
+		pwma = GPIO.PWM(ENA, offset)
+		pwmb = GPIO.PWM(ENB, offset)
+
+		pwma.start(offset)
+		pwmb.start(offset)
+
+		GPIO.output (IN1, True)
+		GPIO.output (IN2, False)
+		GPIO.output (IN3, True)
+		GPIO.output (IN4, False)
+
+		standing = 0
+		forb = -1
+		time = 2 * turntime
+		wentback = 1
+
+
+	def goLeft()
+
+		time = turntime
+		
+		offset = speedMax - speedReduce
+		spd = offset
+
+		pwma = GPIO.PWM(ENA, offset)
+		pwmb = GPIO.PWM(ENB, offset)
+
+		pwma.start(offset)
+		pwmb.start(offset)
+
+		GPIO.output (IN1, False)
+		GPIO.output (IN2, True)
+		GPIO.output (IN3, False)
+		GPIO.output (IN4, False)
+
+
+	def goRigth()
+
+		time = turntime
+		offset = speedMax - speedReduce
+		spd = offset
+
+		pwma = GPIO.PWM(ENA, offset)
+		pwmb = GPIO.PWM(ENB, offset)
+
+		pwma.start(offset)
+		pwmb.start(offset)
+
+		GPIO.output (IN1, False)
+		GPIO.output (IN2, False)
+		GPIO.output (IN3, False)
+		GPIO.output (IN4, True)
+
+
+	#Para MicroServo
+
+	def waitforServo()
+
+		t = 10
+
+		while t:
+			time.sleep(50)
+			t--
+
+
+
+	def lookAtHead()
+
+		p = GPIO.PWM(pinServo,50)
+		p.ChangeDutyCycle(10)					#Se posiciona a la Izquierda
+
+		giroservo[0] = getDistance()			#Obtiene Lectura
+
+		p.start(6)								#Se posiciona al Centro
+		waitforServo()
+
+		giroservo[1] = getDistance()			#Obtiene Lectura
+
+		p.start(3)								#Se posiciona a la Derecha
+		waitforServo()
+
+		giroservo[2] = getDistance()			#Obtiene Lectura
+
+		p.start(6)								#Regresa al Centro
+		waitforServo()
+
+
+	#Para Sensor Ultrasonico HC-SR04
+
+	def getDistance()
+
+		global distance
+
+		time.sleep(0.3)
+		signaloff = 0
+		signalon = 0
+
+		GPIO.output(pinTrig, True)
+
+		time.sleep(0.00001)
+		GPIO.output(pinTrig, False)
+
+		while GPIO.input(pinEcho) == 0:
+			signaloff = time.time()
+
+		while GPIO.input(pinEcho) == 1:
+			signalon = time.time()
+
+		timepassed = signalon - signaloff
+
+		distance = timepassed * 17000
+
+		return getDistance                      #Retorna Distancia en cms
+
+
+	#Para MySQL
+
+	def connMy()
+		datos = [db_host, db_user, db_pass, db_name]
+		connMy = MySQLdb.connect(*datos)
+
+
+	def run_query(query)
+		cursor = conMy.cursor()
+		cursor.Execute(query)
+
+		if query.upper().startswith("SELECT"):
+			data = cursor.fetchall()
+		else:
+			connMy.commit()
+			data = None
+
+		cursor.close()
+		conMy.close()
+		return data
+
+
+	#Para VideoCamara
+
+	def getFoto()
+		with picamera.Picamera() as camera:
+			camera.resolution(1024, 768)
+			camera.start_preview()
+			camera.image_effect = none
+			time.sleep(10)
+			camera.image_effect = 'sketch'
+			time.sleep(10)
+			camera.image_effect = 'emboss'
+			time.sleep(10)
+
+	def getVideo()
+		with picamera.Picamera() as camera:
+			camera.resolution(640, 480)
+			camera.start_preview()
+			camera.start_recording('videorpi.h264')
+			camera.wait_recording(60)
+			camera.stop_recording()
+			camera.stop_preview()
+
+
+
+	#Para Email
+
+	def email()
+
+		msg = MIMEText("Cuerpo del mensaje")
+		msg['Subject'] = "Asunto del mensaje"
+		msg['From'] = "rpi@gmail.com"
+		msg['To'] = mail_to
+
+		server = smtplib.SMTP("smtp.gmail.com:587")
+		server.ehlo_or_helo_if_needed()
+		server.starttls()
+		server.ehlo_or_helo_if_needed()
+		server.login(user_gmail, pass_gmail)
+		server.sendmail(user_gmail, mail_to, msg.as_string())
+		server.quit()
+
+
+	#Para Logica
+
+	def moving()
+
+		GPIO.output(ENA, True)
+		GPIO.output(ENB, True)
+
+		#Evalua la orientacion del avance
+
+		if wenback == 2:
+
+			chooseLoR()
+			return
+
+		if giroservo[0] > stopDistance:
+
+			if giroservo[2] > stopDistance:
+
+				if giroservo[1] >= 4 * stopDistance:
+
+					spd = speedMax
+					goForward()
+
+				elif giroservo[1] < 4 * stopDistance && giroservo[1] > stopDistance:
+				
+					spd = speedMax / 2
+					goForward()
+
+				else
+				
+					stop()
+					lookAtHead()
+					chooseLoR()
+
+			else
+		
+				goLeft()
+
+		elif giroservo[2] > stopDistance:
+
+			goRigth()
+
+		else
+		
+			spd = speedMax - speedReduce
+			goBackward()
+
+			giroservo[1] = getDistance	
+
+
+		
+
+	def chooseLoR()
+
+		if giroservo[0] > stopDistance:
+
+			if giroservo[2] > stopDistance:
+
+				if giroservo[1] > giroservo[2]:
+
+					goLeft()
+
+				elif
+					goRigth()
+
+			else
+			
+				goLeft()
+
+		else
+		
+			if giroservo[2] > stopDistance:
+
+				goRigth()
+
+			else
+			
+				spd = speedMax - speedReduce
+
+				goBackward()
+
+
+
+	def canBackup()
+
+
+	##################
+	#Algoritmo Logico
+	##################
+
+
+	while True:
+
+		if standing == 1:
+			lookAtHead()
+			Moving()
+
+		if time != 0:
+
+			#Hay una accion de movimiento actualmente
+		
+			if forb == 1:
+				moving()
+			elif forb == -1:
+
+				if !CanBackup():
+					stop()
+
+			time --
+
+		else
+			stop()
+
+		time.sleeop(800)
+										
+
+										</pre></code>
+
+									</div>
+
+								</div>
+								
+								<div class="row">
+							
+									<div class="col-md-10">
+										<div class="thumbnail">
+											<h3>
+												Oruga Autonoma con Camara
+											</h3>
+											
+											<p>
+												La Oruga se por si sola, desde cualquier dispositivo ya sea una tablet o un Smartphone, que puede transmitir video en Linea de lo observado en la ruta.
+											</p>
+
+											<div class="caption">
+											
+												<p>
+													Es una oruga tamiya, se controla los motores, usando un integrado L298N, una Raspberry Pi con Camara PiNoir y un bluetooh HC-06.
+												</p>
+												
+											</div>
+											
+											<img alt="300x200" src="images/raspberrypi.jpg">
+		
+										</div>
+		
+									</div>
+
+								</div>
+								
