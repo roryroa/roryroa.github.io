@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+	<script src="script.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Robot Control</title>
+</head>
+
+<body>
+    <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+			 <p>
+					<a class="btn btn-primary btn-large" href="http://dnjs2.wnkserver2.com/~samuelro/arduino.html">Arduino</a>
+				</p>
+				<h1>
+					Oruga Robotica
+				</h1>
+				<div class="container">
+					<img alt="140x140" width="700" height="500" src="images/DSCN2839.JPG" />
+				</div>
+				<div>
+					<p>
+                        <h3>
+						Control de Movimiento desde una pagina Web, usando Sketch en C++, HTML, PHP y Json
+                            </h3>
+					</p>
+
+				</div>
+				
+			</div>
+			
+			
+		</div>
+		
+	</div>
+	
+	</div>
+    <div class="col-md-12 column">
+                  
+    <form id="robot" action="robot.php" method="GET">
+        
+        <table>
+        
+        <tr>
+        <td></td><td align="center"><input type="button" id="fullfw" class="commandButton" value="Avanzar" onClick="fullForward()"/></td><td></td>
+        </tr>
+            
+        <tr>
+            <td><input type="button" id="turnleft" class="commandButton" value="Girar Izquierda" onClick="turnLeft()"/></td><td></td><td><input type="button" id="turnright" class="commandButton" value="Girar Derecha" onClick="turnRight()"/></td>
+        </tr>
+        <tr>
+            <td></td><td align="center"><input type="button" id="stop" class="commandButton" value="Detenerse" onClick="stopRobot()"/></td><td></td>
+        </tr>
+<tr></tr>
+                    <tr>
+            <td></td><td align="center"><input type="button" id="stop" class="commandButton" value="Retroceder" onClick="Reverse()"/></td><td></td>
+        </tr>
+
+        </table>
+    	
+    	
+		
+		
+        
+
+	</form>
+    </div>
+
+</body>
+
+</html>
+
