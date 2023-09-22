@@ -19,6 +19,12 @@
     height: 250px;
 }
 
+.product img{
+    margin-top: 40px;
+    width: 100px;
+    height: 100px;
+}
+
 .card-products img:hover{
     transform: scale(1.2);
 }
@@ -51,9 +57,27 @@
     gap: 10px;
 }
 
+.product-info{
+    padding: 15px 30px;
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quantity{
+    padding: 15px 30px;
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
 .price{
     font-size: 18px;
     font-weight: 900;
+    text-align: center;
 }
 
 .cart-btn {

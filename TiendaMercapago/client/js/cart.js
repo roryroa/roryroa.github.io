@@ -9,7 +9,7 @@ const cartBtn = document.getElementById("cart-btn");
 const displayCart = () => {
     modalContainer.innerHTML = "";
     modalContainer.style.display = "block";
-    modalOverlay.style.display = "block";
+    //modalOverlay.style.display = "block";
 
     //Header
     const modalHeader = document.createElement("div");
@@ -18,7 +18,7 @@ const displayCart = () => {
     
     modalClose.innerHTML = `
         <span class="close">❌</span>
-        <p>Some text in the Modal..</p>
+        
     `;
     
     modalClose.className = "close";
@@ -38,6 +38,29 @@ const displayCart = () => {
 
     modalContainer.append(modalHeader);
 
+    //Body del Modal
+    cart.forEach((itemProducto) =>{
+        const modalBody = document.createElement("div");
+        modalBody.className = "modal-body";
+        modalBody.innerHTML = `
+            <div class="product">
+                <img class="product-img" src="${itemProducto.img}" />
+                <div class="product-info">
+                    <h4>${itemProducto.productName}</h4>
+                </div>
+                <div class="quantity">
+                    <span class"quantity-btn-decrese">-</span>
+                    <span class"quantity-input">${itemProducto.quantity}</span>
+                    <span class"quantity-btn-increse">+</span>
+                </div>   
+                <div class="price"> ${itemProducto.price * itemProducto.quantity} $</div>
+                <div class="delete-product">❌</div>
+            </div>    
+        `;
+
+        modalContainer.append(modalBody);
+    })
+
 };
 
 cartBtn.addEventListener("click", displayCart);
@@ -47,9 +70,10 @@ cartBtn.addEventListener("click", displayCart);
  //   modalContainer.style.display = "none";
   //  modalOverlay.style.display = "none";
  // }
- modalOverlay.addEventListener("click", () => {
-    modalContainer.style.display = "none";
-    modalOverlay.style.display = "none";
-    console.log("?");
-});
+
+//  modalOverlay.addEventListener("click", () => {
+//     //modalContainer.style.display = "none";
+//     modalOverlay.style.display = "none";
+//     console.log("?");
+// });
   

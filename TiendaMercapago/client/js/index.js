@@ -7,7 +7,7 @@ products.forEach((itemProducto) =>{
     const content = document.createElement("div");
     content.className = "card";
     content.innerHTML = `
-        <img src="${itemProducto.img}" >
+        <img alt="${itemProducto.productName}" src="${itemProducto.img}" >
         <h3>${itemProducto.productName}</h3>
         <p>${itemProducto.price} $</p>
         `;
