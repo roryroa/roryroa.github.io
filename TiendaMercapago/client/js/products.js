@@ -1,5 +1,5 @@
 /* Lista productos como un array */
-const productos = [
+const products = [
 {
     id: 1,
     productName:  "nRF24L01 + PA + LNA",
