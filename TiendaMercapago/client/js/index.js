@@ -11,7 +11,7 @@ products.forEach((itemProducto) =>{
         <h3>${itemProducto.productName}</h3>
         <p>${itemProducto.price} $</p>
         `;
-        
+        console.log("Agregando...");
         shopContent.append(content);
 
         const buyButton = document.createElement("button");
@@ -21,6 +21,7 @@ products.forEach((itemProducto) =>{
         content.append(buyButton); 
 
         buyButton.addEventListener('click', ()=> {
+
             cart.push({
                 id: itemProducto.id,
                 productName:  itemProducto.productName,
@@ -28,8 +29,25 @@ products.forEach((itemProducto) =>{
                 quantity: itemProducto.quantity,
                 img: itemProducto.img,
             });
-            console.log(cart);
-        
+
+            /* const repeat = cart.some(repeatProduct) ()=> (repeatProduct.id === itemProducto.id);
+            console.log(repeat);
+            if(repeat){
+                // cart.map(repeatProduct) => {
+                //     if(repeatProduct === itemProducto.id){
+                //         itemProducto.quantity++;
+                //     }
+                // }
+            }else{
+                cart.push({
+                    id: itemProducto.id,
+                    productName:  itemProducto.productName,
+                    price: itemProducto.price,
+                    quantity: itemProducto.quantity,
+                    img: itemProducto.img,
+                });
+                console.log(cart);
+            } */
         });
 
 });

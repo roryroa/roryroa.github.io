@@ -25,7 +25,7 @@ const displayCart = () => {
     modalHeader.append(modalClose);
 
     const modalTitle = document.createElement("div");
-    modalTitle.innerHTML = "Cart";
+    modalTitle.innerHTML = "Carrito";
     modalTitle.className = "close";
     modalHeader.append(modalTitle);
 
@@ -60,6 +60,15 @@ const displayCart = () => {
 
         modalContainer.append(modalBody);
     })
+
+    //Modal footer
+    const modalFooter = document.createElement("div");
+    modalFooter.className = "modal-footer";
+    modalFooter.innerHTML = `
+        <div class="total-price">Total:</div>
+
+    `;
+    modalContainer.append(modalFooter);
 
 };
 
