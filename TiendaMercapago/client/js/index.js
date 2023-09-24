@@ -11,33 +11,26 @@ products.forEach((itemProducto) =>{
         <h3>${itemProducto.productName}</h3>
         <p>${itemProducto.price} $</p>
         `;
-        console.log("Agregando...");
+        //console.log("Agregando...");
         shopContent.append(content);
 
         const buyButton = document.createElement("button");
-        //content.className = "buyButton";
-        buyButton.innerText = "Comprar";
+        
+        buyButton.innerText = "Carrito";
 
         content.append(buyButton); 
 
         buyButton.addEventListener('click', ()=> {
 
-            cart.push({
-                id: itemProducto.id,
-                productName:  itemProducto.productName,
-                price: itemProducto.price,
-                quantity: itemProducto.quantity,
-                img: itemProducto.img,
-            });
-
-            /* const repeat = cart.some(repeatProduct) ()=> (repeatProduct.id === itemProducto.id);
-            console.log(repeat);
+            const repeat = cart.some((repeatProduct) => (repeatProduct.id === itemProducto.id));
+            
             if(repeat){
-                // cart.map(repeatProduct) => {
-                //     if(repeatProduct === itemProducto.id){
-                //         itemProducto.quantity++;
-                //     }
-                // }
+                 cart.map((repeatProduct) => {
+                     if(repeatProduct.id === itemProducto.id){
+                         repeatProduct.quantity++;
+                         displayCartCounter();
+                     }
+                 });
             }else{
                 cart.push({
                     id: itemProducto.id,
@@ -46,8 +39,9 @@ products.forEach((itemProducto) =>{
                     quantity: itemProducto.quantity,
                     img: itemProducto.img,
                 });
-                console.log(cart);
-            } */
+                displayCartCounter();
+                //console.log(cart);
+            } 
         });
 
 });
